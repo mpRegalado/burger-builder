@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import Aux from '../../hoc/Aux';
 import classes from './Layout.module.css';
-import Toolbar from '../Navigation/Toolbar/Toolbar'
-import SideDrawer from '../Navigation/SideDrawer/SideDrawer'
-
+import Header from '../Header/Header'
+import { EuiPage, EuiPageBody } from '@elastic/eui'
 
 class Layout extends Component{
 
@@ -20,15 +19,12 @@ class Layout extends Component{
 
   render (){
     return (
-      <Aux>
-        <Toolbar clickMenu={this.sideDrawerOpenHandler}/>
-        <SideDrawer
-          closed={this.sideDrawerClosedHandler}
-          open={this.state.showSideDrawer} />
-        <main className={classes.Content}>
+      <EuiPage paddingSize="none">
+        <EuiPageBody>
+          <Header />
           {this.props.children}
-        </main>
-      </Aux>
+        </EuiPageBody>
+      </EuiPage>
     )
   };
 };
