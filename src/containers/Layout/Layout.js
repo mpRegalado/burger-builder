@@ -6,8 +6,7 @@ import { Route, Switch } from 'react-router'
 import { 
   EuiPage,
   EuiPageBody,
-  EuiPageContent,
-  EuiFlex
+  EuiPageContent
  } from '@elastic/eui'
 
 class Layout extends Component{

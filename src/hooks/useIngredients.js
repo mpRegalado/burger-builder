@@ -13,6 +13,10 @@ const useIngredients = () => {
                 dispatch({type:'SET_INGREDIENTS', ingredients:ingredients})
                 dispatch({type:'LOADING', loading:false})
             })
+            .catch((error) =>{
+                dispatch({type:'LOADING', loading:false})
+                dispatch({type:'ERROR', error:error.message})
+            })
     },[dispatch])
 
     useEffect(() => {
