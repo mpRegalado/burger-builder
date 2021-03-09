@@ -1,6 +1,6 @@
-import { useEffect, useCallback } from 'react';
+import { /*useEffect,*/ useCallback } from 'react';
 import { useDispatch } from 'react-redux'
-import axios from '../axios-order';
+//import axios from '../axios-order';
 
 const useIngredients = () => {
     const dispatch = useDispatch()
@@ -35,13 +35,13 @@ const useIngredients = () => {
 
     const add = useCallback(ingredient => {
         dispatch({type:'ADD',ingredient:ingredient});
-    },[])
+    },[dispatch])
     const remove = useCallback(ingredient => {
         dispatch({type:'REMOVE',ingredient:ingredient});
-    },[])
+    },[dispatch])
     const clearError = useCallback(() => {
         dispatch({type:'ERROR', error:null});
-    },[])
+    },[dispatch])
 
     return {
         addIngredientHandler: add,

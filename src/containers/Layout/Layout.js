@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Header from '../../components/Header/Header'
 import BurgerBuilder from '../BurgerBuilder/BurgerBuilder'
+import Checkout from '../Checkout/Checkout'
+import { Route, Switch } from 'react-router'
 import { 
   EuiPage,
   EuiPageBody,
@@ -26,7 +28,10 @@ class Layout extends Component{
         <EuiPageBody restrictWidth={true}>
           <Header />
           <EuiPageContent>
-            <BurgerBuilder />
+          <Switch>
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/" exact component={BurgerBuilder} />
+          </Switch>
           </EuiPageContent>
         </EuiPageBody>
       </EuiPage>

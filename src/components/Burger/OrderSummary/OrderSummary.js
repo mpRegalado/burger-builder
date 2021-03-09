@@ -1,33 +1,27 @@
 import React from 'react';
 
-import Aux from '../../../hoc/Aux'
-import Button from '../../UI/Button/Button'
-
-const orderSummary = props => {
+const OrderSummary = props => {
   const ingredientSummary=Object.keys(props.ingredients)
     .map(igKey => {
       return (
         <li key={igKey}>
           <span style={{textTransform: 'capitalize'}}>
-            {igKey}</span>: {props.ingredients[igKey]}
+            {igKey}</span>: {props.ingredients[igKey].ammount}
         </li>
       );
     });
 
   return (
-    <Aux>
+    <>
       <h3>Your order</h3>
       <p>A delicious burger with the following ingredients:</p>
       <ul>
         {ingredientSummary}
       </ul>
       <p>Your total is <strong>{props.price.toFixed(2)}</strong></p>
-      <p>Continue to checkout?</p>
-      <Button btnType="Danger" click={props.purchaseCancelled}>CANCEL</Button>
-      <Button btnType="Success" click={props.purchaseContinued}>CONTINUE</Button>
-    </Aux>
+    </>
   );
 };
 
 
-export default orderSummary;
+export default OrderSummary;

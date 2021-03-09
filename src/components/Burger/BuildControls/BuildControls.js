@@ -1,5 +1,5 @@
 import React from 'react';
-
+import useLink from '../../../hooks/useLink'
 import BuildControl from './BuildControl/BuildControl'
 import {
   EuiPanel,
@@ -9,7 +9,8 @@ import {
   EuiText
 } from '@elastic/eui'
 
-const buildControls = props => {
+const BuildControls = props => {
+  const {linkTo} = useLink();
   const controllers = Object.keys(props.ingredients).map(ingr => (
     <EuiFlexItem key={ingr}>
       <BuildControl 
@@ -25,10 +26,10 @@ const buildControls = props => {
       <EuiFlexGroup direction="column" gutterSize="m">
         <EuiFlexItem><EuiText textAlign="center"><h1>Price: {props.price} </h1></EuiText></EuiFlexItem>
         {controllers}
-        <EuiFlexItem><EuiButton color="secondary" fill onClick={props.purchase} isDisabled={props.disabled}>OrderNow</EuiButton></EuiFlexItem>
+        <EuiFlexItem><EuiButton color="secondary" fill {...linkTo("/checkout")} isDisabled={props.disabled}>OrderNow</EuiButton></EuiFlexItem>
       </EuiFlexGroup>
     </EuiPanel>
   )
 };
 
-export default buildControls;
+export default BuildControls;
