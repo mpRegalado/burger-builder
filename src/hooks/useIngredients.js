@@ -6,19 +6,19 @@ const useIngredients = () => {
     const dispatch = useDispatch();
 
 
-    const getIngredients = () => {
+    const getIngredients = useCallback(() => {
         axios.get('/ingredients.json')
             .then(response => {
                 const ingredients = {...response.data};
                 dispatch({type:'SET_INGREDIENTS', ingredients:ingredients})
                 dispatch({type:'LOADING', loading:false})
             })
-    }
+    },[dispatch])
 
     useEffect(() => {
         dispatch({type:'LOADING', loading:true})
         getIngredients();
-    }, [])
+    }, [dispatch,getIngredients])
 
     const add = useCallback(ingredient => {
         dispatch({type:'ADD',ingredient:ingredient});

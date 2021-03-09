@@ -5,6 +5,7 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import { connect } from 'react-redux'
 import useIngredients from '../../hooks/useIngredients'
+import { EuiLoadingSpinner } from '@elastic/eui'
 
 const BurgerBuilder = (props) => {
   const {
@@ -18,7 +19,7 @@ const BurgerBuilder = (props) => {
 
   let content = <p>Something is Really Wrong</p>
   if (props.loading){
-    content = <p>Loading</p>
+    content = <EuiLoadingSpinner size="xl"/>
   } else if(props.error) {
     content = <p>{props.error}</p>
   } else {

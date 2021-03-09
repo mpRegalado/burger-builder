@@ -6,7 +6,8 @@ import { Route, Switch } from 'react-router'
 import { 
   EuiPage,
   EuiPageBody,
-  EuiPageContent
+  EuiPageContent,
+  EuiFlex
  } from '@elastic/eui'
 
 class Layout extends Component{
@@ -24,10 +25,13 @@ class Layout extends Component{
 
   render (){
     return (
+      <div style={{display:"flex", minHeight:"100vh"}}>
       <EuiPage direction="column">
-        <EuiPageBody restrictWidth={true}>
+        <EuiPageBody restrictWidth={true} direction="column" paddingSize="l">
           <Header />
-          <EuiPageContent>
+          <EuiPageContent
+            verticalPosition="center"
+            horizontalPosition="center">
           <Switch>
             <Route path="/checkout" component={Checkout} />
             <Route path="/" exact component={BurgerBuilder} />
@@ -35,6 +39,7 @@ class Layout extends Component{
           </EuiPageContent>
         </EuiPageBody>
       </EuiPage>
+      </div>
     )
   };
 };
