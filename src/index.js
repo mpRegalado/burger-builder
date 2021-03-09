@@ -3,10 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import orderStoreReducer from './store/orderStore';
+import { Provider } from 'react-redux';
+
+
+const orderStore = createStore(orderStoreReducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={orderStore}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

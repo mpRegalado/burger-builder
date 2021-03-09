@@ -6,6 +6,7 @@ import {
   EuiButton,
   EuiFlexItem,
   EuiFlexGroup,
+  EuiText
 } from '@elastic/eui'
 
 const buildControls = props => {
@@ -22,6 +23,7 @@ const buildControls = props => {
   return (
     <EuiPanel color="accent">
       <EuiFlexGroup direction="column" gutterSize="m">
+        <EuiFlexItem><EuiText textAlign="center"><h1>Price: {props.price} </h1></EuiText></EuiFlexItem>
         {controllers}
         <EuiFlexItem><EuiButton color="secondary" fill onClick={props.purchase} isDisabled={props.disabled}>OrderNow</EuiButton></EuiFlexItem>
       </EuiFlexGroup>

@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
-import axios from '../../axios-order';
 
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
-
+import { connect } from 'react-redux'
 import useIngredients from '../../hooks/useIngredients'
 
-const BurgerBuilder = props => {
+const BurgerBuilder = (props) => {
   const {
-    order,
     addIngredientHandler,
     removeIngredientHandler
   } = useIngredients();
@@ -19,16 +17,24 @@ const BurgerBuilder = props => {
   }
   return (
     <Aux>
-      <Burger ingredients={order.ingredients} />
+      <Burger ingredients={props.ingredients} />
       <BuildControls 
-        ingredients={order.ingredients}
-        disabled={!order.purchasable} 
+        ingredients={props.ingredients}
+        disabled={!props.purchasable} 
         add={addIngredientHandler}
         substract={removeIngredientHandler}
         purchase={purchaseHandler}
+        price={props.totalPrice}
       />
     </Aux>
   );
 }
 
-export default  BurgerBuilder;
+const mapStateToProps = state => {
+  return {
+    ingredients:state.ingredients,
+    purchasable:state.purchasable,
+    totalPrice: state.totalPrice
+  }
+}
+export default  connect(mapStateToProps)(BurgerBuilder);
