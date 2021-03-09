@@ -15,7 +15,14 @@ const BurgerBuilder = (props) => {
   const purchaseHandler = () => {
     alert('You did the thing')
   }
-  return (
+
+  let content = <p>Something is Really Wrong</p>
+  if (props.loading){
+    content = <p>Loading</p>
+  } else if(props.error) {
+    content = <p>{props.error}</p>
+  } else {
+    content = (
     <Aux>
       <Burger ingredients={props.ingredients} />
       <BuildControls 
@@ -27,14 +34,18 @@ const BurgerBuilder = (props) => {
         price={props.totalPrice}
       />
     </Aux>
-  );
+    )
+  }
+  return content;
 }
 
 const mapStateToProps = state => {
   return {
     ingredients:state.ingredients,
     purchasable:state.purchasable,
-    totalPrice: state.totalPrice
+    totalPrice: state.totalPrice,
+    error: state.error,
+    loading: state.loading
   }
 }
 export default  connect(mapStateToProps)(BurgerBuilder);

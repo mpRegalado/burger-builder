@@ -24,7 +24,7 @@ const BuildControls = props => {
   return (
     <EuiPanel color="accent">
       <EuiFlexGroup direction="column" gutterSize="m">
-        <EuiFlexItem><EuiText textAlign="center"><h1>Price: {props.price} </h1></EuiText></EuiFlexItem>
+        <EuiFlexItem><EuiText textAlign="center"><h1>Price: {props.price.toFixed(2)} </h1></EuiText></EuiFlexItem>
         {controllers}
         <EuiFlexItem><EuiButton color="secondary" fill {...linkTo("/checkout")} isDisabled={props.disabled}>OrderNow</EuiButton></EuiFlexItem>
       </EuiFlexGroup>

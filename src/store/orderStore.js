@@ -1,12 +1,12 @@
 const innitialState = {
     ingredients: {
-        cheese:{ammount:0,price:1},
+        cheese:{ammount:1,price:1},
         salad:{ammount:0,price:1},
-        meat:{ammount:0,price:1},
+        meat:{ammount:1,price:1},
         bacon:{ammount:0,price:1}
     },
     purchasable: false,
-    totalPrice: 4,
+    totalPrice: 6,
     error: null,
     loading:false
 }
@@ -16,6 +16,13 @@ const isPurchasable = (ingredients) => {
         if (ingredients[ingredient].ammount > 0) return true;
     }
     return false;
+}
+const totalPrice = ingredients => {
+    let price = 4;
+    for (let key in ingredients){
+        price += ingredients[key].ammount + ingredients[key].price;
+    }
+    return price;
 }
 const addToIngredients = (order, ingredient, add) => {
     const newOrder = {...order};
@@ -36,8 +43,14 @@ const addToIngredients = (order, ingredient, add) => {
 const orderReducer = (currentOrder = innitialState, action) => {
 
     switch (action.type) {
-        case 'SET':
-            return action.order;
+        case 'SET_INGREDIENTS':
+            const newOrder = {
+                ...currentOrder,
+                ingredients: action.ingredients,
+                purchasable: isPurchasable(action.ingredients),
+                totalPrice: totalPrice(action.ingredients)
+            };
+            return newOrder;
         case 'ADD':
             return addToIngredients(currentOrder,action.ingredient,1);
         case 'REMOVE':

@@ -1,37 +1,24 @@
-import { /*useEffect,*/ useCallback } from 'react';
-import { useDispatch } from 'react-redux'
-//import axios from '../axios-order';
+import { useEffect, useCallback } from 'react';
+import { useDispatch,  } from 'react-redux'
+import axios from '../axios-order';
 
 const useIngredients = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    //const getOrder = () => {
-    //    axios.get('/ingredients.json')
-    //      .then(response => {
-    //        const ingredients = {...response.data};
-    //        let price = 0;
-    //        for (let ingredient in ingredients){
-    //          price += ingredients[ingredient].ammount * ingredients[ingredient].price;
-    //        }
-    //        const purchasable = isPurchasable(ingredients);
-    //        const order = {
-    //            ...userOrder,
-    //            ingredients : ingredients,
-    //            purchasable : purchasable,
-    //            totalPrice : price
-    //        }
-    //        dispatch({type:'SET',order:order,loading:false})
-    //      })
-    //      .catch(error => {
-    //        dispatch({type:'ERROR', error:"Couldn't get the ingredients!"});
-    //        dispatch({type:'LOADING',loading:false});
-    //      });
-    //}
 
-    //useEffect(() => {
-    //    dispatch({type:'LOADING', loading:true});
-    //    getOrder();
-    //}, []);
+    const getIngredients = () => {
+        axios.get('/ingredients.json')
+            .then(response => {
+                const ingredients = {...response.data};
+                dispatch({type:'SET_INGREDIENTS', ingredients:ingredients})
+                dispatch({type:'LOADING', loading:false})
+            })
+    }
+
+    useEffect(() => {
+        dispatch({type:'LOADING', loading:true})
+        getIngredients();
+    }, [])
 
     const add = useCallback(ingredient => {
         dispatch({type:'ADD',ingredient:ingredient});
