@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
+import useCheckout from '../../hooks/useCheckout'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import DeliveryForm from '../../components/Form/DeliveryForm/DeliveryForm'
 import { 
@@ -11,64 +12,26 @@ import {
 } from '@elastic/eui'
 
 const Checkout = props => {
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [zipCode, setZipCode] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [changeRequired, setChangeRequired] = useState(false);
-    const [scheduledDelivery, setScheduledDelivery] = useState(false);
+    
+    const {
+        textFieldProps,
+        submitOrder,
+        changeRequired,
+        setChangeRequired,
+        scheduledDelivery,
+        setScheduledDelivery
+    } = useCheckout();
 
-    const textFieldProps = {
-        email:{
-            value:email,
-            valueChanger:setEmail,
-            label:'Email',
-            placeholder:'Email'
-        },
-        name:{
-            value:name,
-            valueChanger:setName,
-            label:'Name',
-            placeholder:'Name'
-        },
-        address:{
-            value:address,
-            valueChanger:setAddress,
-            label:'Address',
-            placeholder:'Address'
-        },
-        zipCode:{
-            value:zipCode,
-            valueChanger:setZipCode,
-            label:'Zip Code',
-            placeholder:'Zip Code'
-        },
-        phoneNumber:{
-            value:phoneNumber,
-            valueChanger:setPhoneNumber,
-            label:'Phone Number',
-            placeholder:'Phone Number'
-        }        
+    const onOrderHandler = () => {
+        submitOrder(props.ingredients);
     }
 
-    const deliveryHandler =  () => {
-        const ingredients = {};
-        for (let key in props.ingredients){
-            ingredients[key] = props.ingredients[key].ammount;
-        };
-        const client = {
-            changeRequired:changeRequired,
-            scheduledDelivery:scheduledDelivery
-        };
+    const canOrder = () => {
+        let order=true;
         for (let key in textFieldProps){
-            client[key]=textFieldProps[key].value;
+            order = order && textFieldProps[key].isValid;
         }
-        const order = {
-            ingredients: ingredients,
-            client: client
-        }
-        console.log(order)
+        return order && props.purchasable;
     }
 
     return (
@@ -88,7 +51,7 @@ const Checkout = props => {
                 />
             </EuiFlexItem>
             <EuiFlexItem>
-                <EuiButton isDisabled={!props.purchasable} onClick={deliveryHandler}>Order Now!</EuiButton>
+                <EuiButton isDisabled={!canOrder()} onClick={onOrderHandler}>Order Now!</EuiButton>
             </EuiFlexItem>
         </EuiFlexGroup>
     )

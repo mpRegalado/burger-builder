@@ -1,10 +1,10 @@
 import React from 'react'
 import { EuiFieldText, EuiFormRow } from '@elastic/eui'
 
-const TextField = ({value, label, valueChanger, placeholder}) => {
+const TextField = ({value, label, valueChanger, placeholder, isValid}) => {
     //console.log('[TEXTFIELD]' + label);    
     return(
-        <EuiFormRow label={label}>
+        <EuiFormRow label={label} isInvalid={!isValid}>
             <EuiFieldText
                 placeholder={placeholder}
                 value={value}
