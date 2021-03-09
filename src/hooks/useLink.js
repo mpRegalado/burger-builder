@@ -1,7 +1,8 @@
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 
 const useLink = () =>{
     const history = useHistory();
+    const location = useLocation();
 
     const isModifiedEvent = (event) =>
         !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
@@ -13,7 +14,7 @@ const useLink = () =>{
         return target && target !== '_self';
     };
 
-    const linkTo = (path) => {
+    const linkTo = (path, checkActive = false) => {
         const href = history.createHref({ pathname: path});
 
         const onClick = event => {
@@ -33,10 +34,15 @@ const useLink = () =>{
               history.push(path);
         }
 
-        return {
+        const props = {
             href: href,
             onClick: onClick
-        }        
+        }
+        if (checkActive){
+            props.isActive = location.pathname === path;
+        }
+
+        return props;
     }
     return {linkTo:linkTo}
 }

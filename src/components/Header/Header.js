@@ -1,7 +1,6 @@
 import React from 'react'
-
+import useLink from '../../hooks/useLink'
 import burgerLogo from '../../assets/images/burger-logo.png'
-import LinkRouter from '../../hoc/linkRouter/linkRouter'
 import { 
     EuiHeader,
     EuiHeaderLinks,
@@ -12,22 +11,23 @@ import {
     EuiSpacer } from '@elastic/eui'
 
 const Header = props => {
+    const {linkTo} = useLink();
     const pages = {
         'Burger Builder':'/',
         'Checkout':'/checkout'
     }
 
     const navLinks = Object.keys(pages).map((tabName) => (
-        <LinkRouter key={pages[tabName]} to={pages[tabName]} Component={EuiHeaderLink} checkActive={true}>{tabName}</LinkRouter>
+        <EuiHeaderLink key={pages[tabName]} {...linkTo(pages[tabName],true)}>{tabName}</EuiHeaderLink>
     ))
     
     return (
     <EuiHeader position="fixed">
         <EuiSpacer />
         <EuiHeaderSectionItem border="none">
-            <LinkRouter to="/" Component={EuiLink}>
+            <EuiLink {...linkTo("/")}>
                 <EuiImage size={50} url={burgerLogo} alt="Burger Logo" />
-            </LinkRouter>
+            </EuiLink>
         </EuiHeaderSectionItem>
         <EuiHeaderSectionItem>
             <EuiHeaderLinks>
