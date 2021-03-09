@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axios from '../axios-order'
 
 const validateEmail = (input) => {
     const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
@@ -6,13 +7,14 @@ const validateEmail = (input) => {
 };
 
 const useCheckout = () => {
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [zipCode, setZipCode] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('foo@bar.com');
+    const [name, setName] = useState('Benito');
+    const [address, setAddress] = useState('Calle Falsa 123');
+    const [zipCode, setZipCode] = useState('42069');
+    const [phoneNumber, setPhoneNumber] = useState('481516234');
     const [changeRequired, setChangeRequired] = useState(false);
     const [scheduledDelivery, setScheduledDelivery] = useState(false);
+    const [modalState, setModalState] = useState(null);
 
     const textFieldProps = {
         email:{
@@ -48,6 +50,10 @@ const useCheckout = () => {
     }
 
     const submitOrder =  (ing) => {
+        setModalState({
+            title:"Submitting order",
+            isLoading:true
+        });
         const ingredients = {};
         for (let key in ing){
             ingredients[key] = ing[key].ammount;
@@ -65,15 +71,38 @@ const useCheckout = () => {
             changeRequired,
             scheduledDelivery
         }
-        console.log(order)
+        axios.post('/orders.json',order)
+            .then(response => {
+                setModalState({
+                    title:"Order Successful!",
+                    confirmButtonText: "Yum!",
+                    onConfirm:modalClose
+                })
+            })
+            .catch(error => {
+                setModalState({
+                    title:"There was an error",
+                    confirmButtonText: "Close",
+                    buttonColor:"danger"
+                })
+            })
     }
+    
+    const modalClose = () => {
+        setModalState(null);
+    }
+    const modalProps = modalState ? {
+        ...modalState,
+        onCancel: modalClose
+    }:null
     return {
         textFieldProps,
         submitOrder,
         changeRequired,
         setChangeRequired,
         scheduledDelivery,
-        setScheduledDelivery
+        setScheduledDelivery,
+        modalProps
     }
 }
 

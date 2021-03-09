@@ -8,7 +8,8 @@ import {
     EuiPanel,
     EuiFlexGroup,
     EuiFlexItem,
-    EuiButton
+    EuiButton,
+    EuiConfirmModal
 } from '@elastic/eui'
 
 const Checkout = props => {
@@ -19,7 +20,8 @@ const Checkout = props => {
         changeRequired,
         setChangeRequired,
         scheduledDelivery,
-        setScheduledDelivery
+        setScheduledDelivery,
+        modalProps
     } = useCheckout();
 
     const onOrderHandler = () => {
@@ -34,8 +36,16 @@ const Checkout = props => {
         return order && props.purchasable;
     }
 
+    let modal;
+    if (modalProps){
+        modal = (
+            <EuiConfirmModal {...modalProps}></EuiConfirmModal>
+        )
+    }
+
     return (
         <EuiFlexGroup direction="column" >
+            {modal}
             <EuiFlexItem>
                 <EuiPanel>
                     <OrderSummary ingredients={props.ingredients} price={props.price} />
