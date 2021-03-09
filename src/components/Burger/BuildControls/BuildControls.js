@@ -1,31 +1,32 @@
 import React from 'react';
 
-import classes from './BuildControls.module.css'
 import BuildControl from './BuildControl/BuildControl'
+import {
+  EuiPanel,
+  EuiButton,
+  EuiFlexItem,
+  EuiFlexGroup,
+} from '@elastic/eui'
 
-const controls = [
-  {label: 'Salad', type: 'salad'},
-  {label: 'Bacon', type: 'bacon'},
-  {label: 'Cheese', type: 'cheese'},
-  {label: 'Meat', type: 'meat'}
-];
-
-const buildControls = props => (
-  <div className={classes.BuildControls}>
-  <p>Current Price : <strong>{props.price.toFixed(2)}</strong></p>
-    {controls.map(ctrl =>(
-      <BuildControl
-        key={ctrl.label}
-        label={ctrl.label}
-        added={() => props.ingredientAdded(ctrl.type)}
-        removed={() => props.ingredientRemoved(ctrl.type)}
-        disabled={props.disabled[ctrl.type]}/>
-    ))}
-    <button
-      className={classes.OrderButton}
-      disabled={!props.purchasable}
-      onClick={props.ordered}>ORDER NOW</button>
-  </div>
-);
+const buildControls = props => {
+  const controllers = Object.keys(props.ingredients).map(ingr => (
+    <EuiFlexItem key={ingr}>
+      <BuildControl 
+        ingredient={ingr.charAt(0).toUpperCase() + ingr.slice(1)}  
+        add={() => props.add(ingr)}
+        substract={() => props.substract(ingr)}
+        ammount={props.ingredients[ingr].ammount}
+      />
+    </EuiFlexItem>
+  ))
+  return (
+    <EuiPanel color="accent">
+      <EuiFlexGroup direction="column" gutterSize="m">
+        {controllers}
+        <EuiFlexItem><EuiButton color="secondary" fill onClick={props.purchase} isDisabled={props.disabled}>OrderNow</EuiButton></EuiFlexItem>
+      </EuiFlexGroup>
+    </EuiPanel>
+  )
+};
 
 export default buildControls;

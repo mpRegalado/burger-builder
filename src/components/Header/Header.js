@@ -1,33 +1,41 @@
 import React from 'react'
 
-import useLink from '../../hooks/useLink'
 import burgerLogo from '../../assets/images/burger-logo.png'
-import EuiRoutedHeaderLink from '../EuiRoute/EuiRoutedHeaderLink'
+import LinkRouter from '../../hoc/linkRouter/linkRouter'
 import { 
     EuiHeader,
     EuiHeaderLinks,
-    EuiHeaderLink,
     EuiLink,
     EuiHeaderSectionItem,
-    EuiImage } from '@elastic/eui'
+    EuiHeaderLink,
+    EuiImage,
+    EuiSpacer } from '@elastic/eui'
 
 const Header = props => {
+    const pages = {
+        'Burger Builder':'/',
+        'Checkout':'/checkout'
+    }
 
-    const { linkTo } = useLink();
-
-    return (<EuiHeader position='fixed' >
+    const navLinks = Object.keys(pages).map((tabName) => (
+        <LinkRouter key={pages[tabName]} to={pages[tabName]} Component={EuiHeaderLink} checkActive={true}>{tabName}</LinkRouter>
+    ))
+    
+    return (
+    <EuiHeader position="fixed">
+        <EuiSpacer />
         <EuiHeaderSectionItem border="none">
-            <EuiLink {...linkTo("/")}>
-                <EuiImage size={50} alt="burger-logo" url={burgerLogo} />
-            </EuiLink>
+            <LinkRouter to="/" Component={EuiLink}>
+                <EuiImage size={50} url={burgerLogo} alt="Burger Logo" />
+            </LinkRouter>
         </EuiHeaderSectionItem>
         <EuiHeaderSectionItem>
-            <EuiHeaderLinks >
-                <EuiRoutedHeaderLink to="/">Burger Builder</EuiRoutedHeaderLink>
-                <EuiRoutedHeaderLink to="/checkout">Checkout</EuiRoutedHeaderLink>
+            <EuiHeaderLinks>
+                {navLinks}
             </EuiHeaderLinks>
         </EuiHeaderSectionItem>
-    </EuiHeader>)
+    </EuiHeader>
+    )
 }
 
 export default Header;

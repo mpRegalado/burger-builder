@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import Aux from '../../hoc/Aux';
-import classes from './Layout.module.css';
-import Header from '../Header/Header'
-import { EuiPage, EuiPageBody } from '@elastic/eui'
+import Header from '../../components/Header/Header'
+import BurgerBuilder from '../BurgerBuilder/BurgerBuilder'
+import { 
+  EuiPage,
+  EuiPageBody,
+  EuiPageContent
+ } from '@elastic/eui'
 
 class Layout extends Component{
 
@@ -19,10 +22,12 @@ class Layout extends Component{
 
   render (){
     return (
-      <EuiPage paddingSize="none">
-        <EuiPageBody>
+      <EuiPage direction="column">
+        <EuiPageBody restrictWidth={true}>
           <Header />
-          {this.props.children}
+          <EuiPageContent>
+            <BurgerBuilder />
+          </EuiPageContent>
         </EuiPageBody>
       </EuiPage>
     )
