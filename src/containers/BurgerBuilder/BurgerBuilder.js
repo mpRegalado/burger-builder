@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import { connect } from 'react-redux'
@@ -27,7 +26,7 @@ const BurgerBuilder = (props) => {
     </ErrorPrompt>)
   } else {
     content = (
-    <Aux>
+    <>
       <Burger ingredients={props.ingredients} />
       <BuildControls 
         ingredients={props.ingredients}
@@ -37,7 +36,7 @@ const BurgerBuilder = (props) => {
         purchase={purchaseHandler}
         price={props.totalPrice}
       />
-    </Aux>
+    </>
     )
   }
   return content;
