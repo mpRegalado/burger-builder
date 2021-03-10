@@ -63,7 +63,8 @@ const useCheckout = () => {
             email,
             name,
             address,
-            zipCode
+            zipCode,
+            phoneNumber
         }
         const deliveryTime = scheduledDelivery ? scheduledDelivery : moment().add(1,'hour');
         const order = {
