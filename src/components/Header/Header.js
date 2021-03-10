@@ -14,7 +14,9 @@ const Header = props => {
     const {linkTo} = useLink();
     const pages = {
         'Burger Builder':'/',
-        'Checkout':'/checkout'
+        'Checkout':'/checkout',
+        'Past Orders': '/pastOrders',
+        'Sign In': '/authenticate'
     }
 
     const navLinks = Object.keys(pages).map((tabName) => (
