@@ -15,7 +15,7 @@ const useIngredients = () => {
             })
             .catch((error) =>{
                 dispatch({type:'LOADING', loading:false})
-                dispatch({type:'ERROR', error:error.message})
+                dispatch({type:'ERROR', error:error})
             })
     },[dispatch])
 

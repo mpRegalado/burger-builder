@@ -23,7 +23,7 @@ const BurgerBuilder = (props) => {
     content = <EuiLoadingSpinner size="xl"/>
   } else if(props.error) {
     content = (<ErrorPrompt errorTitle="Error on loading ingredients">
-      <p>{props.error}</p>
+      <p>{props.error.message}</p>
     </ErrorPrompt>)
   } else {
     content = (
