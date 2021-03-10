@@ -8,11 +8,11 @@ const validateEmail = (input) => {
 };
 
 const useCheckout = () => {
-    const [email, setEmail] = useState('foo@bar.com');
-    const [name, setName] = useState('Benito');
-    const [address, setAddress] = useState('Calle Falsa 123');
-    const [zipCode, setZipCode] = useState('42069');
-    const [phoneNumber, setPhoneNumber] = useState('481516234');
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [zipCode, setZipCode] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [changeRequired, setChangeRequired] = useState(false);
     const [scheduledDelivery, setScheduledDelivery] = useState(false);
     const [modalState, setModalState] = useState(null);
