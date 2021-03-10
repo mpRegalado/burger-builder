@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { createStore } from 'redux';
 import orderStoreReducer from './store/orderStore';
 import { Provider } from 'react-redux';
+import AuthContextProvider from './context/auth-context';
 
 
 const orderStore = createStore(orderStoreReducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={orderStore}>
-      <App />
-    </Provider>
+    <AuthContextProvider>
+      <Provider store={orderStore}>
+        <App />
+      </Provider>
+    </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

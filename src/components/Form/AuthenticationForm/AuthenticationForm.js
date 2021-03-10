@@ -15,22 +15,24 @@ import {
 const AuthenticationForm = ({
     email,
     password,
-    //equalPasswords,
     useExisting,
     submitHandler,
     onEmailChangeHandler,
     onPasswordChangeHandler,
-    //onPasswordConfirmChangeHandler,
-    onSwitchHandler
+    onSwitchHandler,
+    loading
 }) => {
     const [equalPasswords, setEqualPasswords] = useState(false);
-    
+
     const validateEmail = (input) => {
         const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
         return re.test(input);
     };
+    const validatePassword = (input) => {
+        return input.length >= 6;
+    }
     const canSubmit = () => {
-        return validateEmail(email) && password.length > 0 && (equalPasswords || useExisting);
+        return validateEmail(email) && validatePassword(password) && (equalPasswords || useExisting);
     }
     return(
         <EuiFlexGroup direction="column">
@@ -51,6 +53,7 @@ const AuthenticationForm = ({
                         placeholder="Password"
                         onChange={onPasswordChangeHandler}
                         value={password}
+                        isInvalid={!validatePassword(password)}
                         />
                 </EuiFormRow>
                 {useExisting ? null : <EuiFormRow label="Repeat Password">
@@ -61,7 +64,14 @@ const AuthenticationForm = ({
                         />
                 </EuiFormRow>}
             </EuiForm></EuiFlexItem>
-            <EuiFlexItem><EuiButton onClick={submitHandler} isDisabled={!canSubmit()}>{useExisting ? "Log In" : "Sign Up"}</EuiButton></EuiFlexItem>
+            <EuiFlexItem>
+                <EuiButton
+                    onClick={submitHandler} 
+                    isDisabled={!canSubmit()}
+                    isLoading={loading}>
+                        {useExisting ? "Log In" : "Sign Up"}
+                </EuiButton>
+            </EuiFlexItem>
         </EuiFlexGroup>
     );
 }
