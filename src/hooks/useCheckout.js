@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useState } from 'react'
 import axios from '../axios-order'
 
@@ -64,12 +65,12 @@ const useCheckout = () => {
             address,
             zipCode
         }
-        
+        const deliveryTime = scheduledDelivery ? scheduledDelivery : moment().add(1,'hour');
         const order = {
             ingredients,
             client,
             changeRequired,
-            scheduledDelivery
+            deliveryTime
         }
         axios.post('/orders.json',order)
             .then(response => {
