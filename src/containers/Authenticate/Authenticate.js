@@ -1,21 +1,14 @@
 import React from 'react'
 import AuthenticationForm from '../../components/Form/AuthenticationForm/AuthenticationForm';
-
-import {useState} from 'react'
+import useAuth from '../../hooks/useAuth';
 
 const Authenticate = props => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [existing, setExisting] = useState(false);
-    const [equalPasswords, setEqualPasswords] = useState(false);
-
-    const submitHandler = () => {
-        const credentials = {
-            email: email,
-            password: password
-        }
-        console.log(credentials);
-    }
+    const {
+        email, setEmail,
+        password, setPassword,
+        existing, setExisting,
+        submitHandler
+    } = useAuth()
 
     return (<AuthenticationForm 
         email={email}
@@ -25,8 +18,6 @@ const Authenticate = props => {
         onPasswordChangeHandler={e => {setPassword(e.target.value)}}
         submitHandler={submitHandler}
         onSwitchHandler={e => {setExisting(e.target.checked)}}
-        equalPasswords={equalPasswords}
-        onPasswordConfirmChangeHandler={e => {setEqualPasswords(password === e.target.value)}}
     />)
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
     EuiFormRow,
     EuiForm,
@@ -15,14 +15,16 @@ import {
 const AuthenticationForm = ({
     email,
     password,
-    equalPasswords,
+    //equalPasswords,
     useExisting,
     submitHandler,
     onEmailChangeHandler,
     onPasswordChangeHandler,
-    onPasswordConfirmChangeHandler,
+    //onPasswordConfirmChangeHandler,
     onSwitchHandler
 }) => {
+    const [equalPasswords, setEqualPasswords] = useState(false);
+    
     const validateEmail = (input) => {
         const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
         return re.test(input);
@@ -54,7 +56,7 @@ const AuthenticationForm = ({
                 {useExisting ? null : <EuiFormRow label="Repeat Password">
                     <EuiFieldPassword type="dual" 
                         placeholder="Password"
-                        onChange={onPasswordConfirmChangeHandler}
+                        onChange={e => {setEqualPasswords(password === e.target.value)}}
                         isInvalid={!equalPasswords}
                         />
                 </EuiFormRow>}
