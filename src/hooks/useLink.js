@@ -15,7 +15,7 @@ const useLink = () =>{
     };
 
     const linkTo = (path, checkActive = false) => {
-        const href = history.createHref({ pathname: path});
+        const href = history.createHref({ pathname: path.pathname ? path.pathname : path});
 
         const onClick = event => {
             if (event.defaultPrevented) {

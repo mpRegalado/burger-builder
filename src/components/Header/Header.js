@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import { AuthContext } from '../../context/auth-context'
+
 import useLink from '../../hooks/useLink'
 import burgerLogo from '../../assets/images/burger-logo.png'
 import { 
@@ -12,11 +14,17 @@ import {
 
 const Header = props => {
     const {linkTo} = useLink();
+    const { authenticated, logOut } = useContext(AuthContext);
+
+
     const pages = {
-        'Burger Builder':'/',
-        'Checkout':'/checkout',
-        'Past Orders': '/pastOrders',
-        'Sign In': '/authenticate'
+        'Burger Builder':'/'
+    }
+    if(authenticated){
+        pages['Past Orders'] = '/pastOrders';
+        pages['Sign Out'] = '/signOut';
+    } else {
+        pages['Sign In']='/authenticate'
     }
 
     const navLinks = Object.keys(pages).map((tabName) => (

@@ -12,31 +12,34 @@ const useAuth = () => {
     const auth = useContext(AuthContext);
     const history = useHistory();
 
-    const submitHandler = () => {
+    const submit = () => {
         const credentials = {
             email: email,
             password: password
         }
         if(existing){
-            authenticate('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=***REMOVED***', credentials);
+            return authenticate('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=***REMOVED***', credentials);
         } else {
-            authenticate('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=***REMOVED***', credentials)
+            return authenticate('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=***REMOVED***', credentials)
         }
     }
 
     const authenticate = (endpoint, credentials) => {
         setLoading(true);
         setError(null);
-        axios.post(endpoint, {...credentials, returnSecureToken:true})
+        return axios.post(endpoint, {...credentials, returnSecureToken:true})
             .then(response => {
                 setLoading(false);
                 auth.logIn();
-                history.push("/");
+                if (history.location.search==='?continueToCheckout') {
+                    history.push('/checkout')
+                } else {
+                    history.push('/')
+                }
             })
             .catch(error => {
                 setLoading(false);
                 setError(error);
-                console.log(error);
             })
     }
 
@@ -45,7 +48,7 @@ const useAuth = () => {
         password, setPassword,
         existing, setExisting,
         loading, error,
-        submitHandler
+        submit
     }
 }
 export default useAuth;

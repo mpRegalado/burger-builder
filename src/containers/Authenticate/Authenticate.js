@@ -8,8 +8,12 @@ const Authenticate = props => {
         password, setPassword,
         existing, setExisting,
         loading, error,
-        submitHandler
+        submit
     } = useAuth()
+
+    const submitHandler = () => {
+        submit()
+    }
 
     return (
     <>
