@@ -15,7 +15,7 @@ Some of the lessons applied to this project were:
 
 The backend of the project has been built using [Firebase](https://firebase.google.com/)
 
-You can find a live version of the project here
+[You can find a live version of the project here](https://borger-boilder.web.app/)
 
 ## Setting up this project
 
