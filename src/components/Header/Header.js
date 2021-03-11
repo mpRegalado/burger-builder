@@ -14,7 +14,7 @@ import {
 
 const Header = props => {
     const {linkTo} = useLink();
-    const { authenticated, logOut } = useContext(AuthContext);
+    const { authenticated } = useContext(AuthContext);
 
 
     const pages = {

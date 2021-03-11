@@ -1,6 +1,7 @@
 import moment from 'moment';
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from '../axios-order'
+import {AuthContext} from '../context/auth-context'
 
 const validateEmail = (input) => {
     const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
@@ -16,6 +17,7 @@ const useCheckout = () => {
     const [changeRequired, setChangeRequired] = useState(false);
     const [scheduledDelivery, setScheduledDelivery] = useState(false);
     const [modalState, setModalState] = useState(null);
+    const {authenticated, userId } = useContext(AuthContext)
 
     const textFieldProps = {
         email:{
@@ -73,7 +75,7 @@ const useCheckout = () => {
             changeRequired,
             deliveryTime
         }
-        axios.post('/orders.json',order)
+        axios.post('/orders/'+ userId +'.json?auth=' + authenticated ,order)
             .then(response => {
                 setModalState({
                     title:"Order Successful!",

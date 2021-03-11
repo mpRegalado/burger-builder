@@ -9,7 +9,7 @@ const SignOut = () => {
     useEffect(() => {
         logOut()
         history.push('/')
-    }, [logOut])
+    }, [logOut, history])
 
     return null;
 

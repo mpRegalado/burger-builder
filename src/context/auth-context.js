@@ -1,20 +1,24 @@
 import {createContext, useState} from 'react'
 
 export const AuthContext = createContext({
-    authToken:null
+    authenticated:null,
 });
 
 const AuthContextProvider = props => {
-    const [authenticated, setAuthenticated] = useState(false)
-    const logIn = () => {
-        setAuthenticated(true);
+    const [authenticated, setAuthenticated] = useState(null)
+    const [userId, setUserId] = useState(null);
+
+    const logIn = (token, userId) => {
+        setAuthenticated(token);
+        setUserId(userId);
     }
     const logOut = () => {
-        setAuthenticated(false)
+        setAuthenticated(null);
     }
     return (
         <AuthContext.Provider value={{
             authenticated:authenticated,
+            userId: userId,
             logIn:logIn,
             logOut:logOut
         }}>

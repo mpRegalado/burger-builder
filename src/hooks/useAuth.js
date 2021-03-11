@@ -18,9 +18,9 @@ const useAuth = () => {
             password: password
         }
         if(existing){
-            return authenticate('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=***REMOVED***', credentials);
+            return authenticate('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+process.env.REACT_APP_WEB_API, credentials);
         } else {
-            return authenticate('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=***REMOVED***', credentials)
+            return authenticate('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+process.env.REACT_APP_WEB_API, credentials);
         }
     }
 
@@ -30,7 +30,12 @@ const useAuth = () => {
         return axios.post(endpoint, {...credentials, returnSecureToken:true})
             .then(response => {
                 setLoading(false);
-                auth.logIn();
+                auth.logIn(response.data.idToken, response.data.localId);
+                
+                setTimeout(() => {
+                    auth.logOut();
+                },response.data.expiresIn*1000);
+
                 if (history.location.search==='?continueToCheckout') {
                     history.push('/checkout')
                 } else {

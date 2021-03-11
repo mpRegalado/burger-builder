@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://borger-boilder-default-rtdb.firebaseio.com'
+    baseURL: process.env.REACT_APP_BASE_URL
 })
 
 export default axiosInstance;
