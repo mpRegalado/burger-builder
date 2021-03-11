@@ -22,7 +22,7 @@ const AuthenticationForm = ({
     onSwitchHandler,
     loading
 }) => {
-    const [equalPasswords, setEqualPasswords] = useState(false);
+    const [validConfirm, setValidConfirm] = useState(false);
 
     const validateEmail = (input) => {
         const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
@@ -31,36 +31,45 @@ const AuthenticationForm = ({
     const validatePassword = (input) => {
         return input.length >= 6;
     }
-    const canSubmit = () => {
-        return validateEmail(email) && validatePassword(password) && (equalPasswords || useExisting);
+    const validateConfirm = (input) => {
+        return input === password;
     }
+
+    const canSubmit = () => {
+        return validateEmail(email) && validatePassword(password) && (validConfirm || useExisting);
+    }
+    const isEmailInvalid = !validateEmail(email);
+    const isPasswordInvalid = !validatePassword(password);
+    const invalidEmailMessage = isEmailInvalid ? ["This has to be a valid email! xxx@xxx.xxx"] : null;
+    const invalidPasswordMessage = isPasswordInvalid ? ["Password is too short! 6 characters or longer"] : null;
+    const invalidConfirmMessage = !validConfirm ? ["Type the same password!"] : null;
     return(
         <EuiFlexGroup direction="column">
             <EuiFlexItem><EuiText><h1>{useExisting ? "Log In" : "Sign Up"}</h1></EuiText></EuiFlexItem>
             <EuiFlexItem><EuiForm>
                 <EuiFormRow><EuiSwitch checked={useExisting} onChange={onSwitchHandler} label="Already have an account?"/></EuiFormRow>
-                <EuiFormRow label="Email">
+                <EuiFormRow label="Email" isInvalid={isEmailInvalid} error={invalidEmailMessage}>
                     <EuiFieldText value={email}
                         onChange={onEmailChangeHandler}
                         placeholder="Email"
                         prepend={<EuiIcon type="email"/>}
-                        isInvalid={!validateEmail(email)}
+                        isInvalid={isEmailInvalid}
                         />
                 </EuiFormRow>
-                <EuiFormRow label="Password">
+                <EuiFormRow label="Password" isInvalid={isPasswordInvalid} error={invalidPasswordMessage}>
                     <EuiFieldPassword 
                         type="dual"
                         placeholder="Password"
                         onChange={onPasswordChangeHandler}
                         value={password}
-                        isInvalid={!validatePassword(password)}
+                        isInvalid={isPasswordInvalid}
                         />
                 </EuiFormRow>
-                {useExisting ? null : <EuiFormRow label="Repeat Password">
+                {useExisting ? null : <EuiFormRow label="Repeat Password" isInvalid={!validConfirm} error={invalidConfirmMessage}>
                     <EuiFieldPassword type="dual" 
                         placeholder="Password"
-                        onChange={e => {setEqualPasswords(password === e.target.value)}}
-                        isInvalid={!equalPasswords}
+                        onChange={e => {setValidConfirm(validateConfirm(e.target.value))}}
+                        isInvalid={!validConfirm}
                         />
                 </EuiFormRow>}
             </EuiForm></EuiFlexItem>

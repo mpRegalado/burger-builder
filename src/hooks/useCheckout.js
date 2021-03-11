@@ -24,31 +24,36 @@ const useCheckout = () => {
             value:email,
             valueChanger:setEmail,
             label:'Email',
-            isValid: validateEmail(email)
+            isValid: validateEmail(email),
+            invalidMessage: "Use a proper email! xxx@xxx.xxx"
         },
         name:{
             value:name,
             valueChanger:setName,
             label:'Name',
-            isValid: name.trim().length > 0
+            isValid: name.trim().length > 0,
+            invalidMessage: "Write something here"
         },
         address:{
             value:address,
             valueChanger:setAddress,
             label:'Address',
-            isValid: address.trim().length > 0
+            isValid: address.trim().length > 0,
+            invalidMessage: "Write something here"
         },
         zipCode:{
             value:zipCode,
             valueChanger:setZipCode,
             label:'Zip Code',
-            isValid: !isNaN(zipCode) && zipCode.length === 5
+            isValid: !isNaN(zipCode) && zipCode.length === 5,
+            invalidMessage: "Must be a 5 digit number"
         },
         phoneNumber:{
             value:phoneNumber,
             valueChanger:setPhoneNumber,
             label:'Phone Number',
-            isValid: !isNaN(phoneNumber) && phoneNumber.length === 9
+            isValid: !isNaN(phoneNumber) && phoneNumber.length === 9,
+            invalidMessage: "Must be a 9 digit number"
         }        
     }
 
