@@ -8,10 +8,11 @@ An user will be able to build a burger, log in or sign up with their account, pl
 The interface has been built using components from the [ElasticUi](https://elastic.github.io/eui/#/) library.
 
 Some of the lessons applied to this project were:
-    - State management with `useState()`, `react-redux` and `useContext()`
-    - The use of `react-router` to implement a single page application with multiple urls.
-    - Form implementation, submission and validation.
-    - Communication with a backend.
+
+- State management with `useState()`, `react-redux` and `useContext()`
+- The use of `react-router` to implement a single page application with multiple urls.
+- Form implementation, submission and validation.
+- Communication with a backend.
 
 The backend of the project has been built using [Firebase](https://firebase.google.com/)
 
